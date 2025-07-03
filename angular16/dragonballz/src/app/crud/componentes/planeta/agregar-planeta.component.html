@@ -1,0 +1,30 @@
+<div class="container-fluid py-3 px-4">
+    <h5>Cargar Planetas desde la API</h5>
+    <form class="row" (submit)="cargarPlanetasAPI()">
+        <input type="text" [(ngModel)]="numero" name="numero" class="form-control mb-2" placeholder="Número">
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+                Cargar
+            </button>
+        </div>
+    </form>
+    <hr>
+    <h5>Filtrar Planetas desde la API</h5>
+    <form class="row" (submit)="filtrarPlanetasAPI()">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="isDestroyed" class="form-label">Destruido</label>
+                <select id="isDestroyed" [(ngModel)]="destruido" class="form-select" name="destruido">
+                    <option value="">Todos</option>
+                    <option value="true">Destruido</option>
+                    <option value="false">No destruido</option>
+                </select>
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+                Filtrar
+            </button>
+        </div>
+    </form>
+</div>

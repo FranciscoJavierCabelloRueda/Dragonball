@@ -1,0 +1,56 @@
+/* ===============================
+   Dragon Ball Z Style - App Component
+   =============================== */
+
+/* Definición de la paleta DBZ */
+:root {
+  --dbz-orange: #f27900;    /* Naranja DB */
+  --dbz-yellow: #ffd700;    /* Amarillo brillante */
+  --dbz-blue:   #1f52ee;    /* Azul intenso */
+  --dbz-black:  #000000;    /* Negro */
+  --dbz-white:  #ffffff;    /* Blanco */
+}
+
+body {
+  font-family: 'Bangers', cursive, sans-serif; /* Fuente de estilo cartoon, puede reemplazarse */
+  background: var(--dbz-orange);
+  color: var(--dbz-black);
+}
+
+/* Estilo para el contenedor principal */
+.contenedor {
+  background: var(--dbz-orange);
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Personalización de la barra de navegación */
+.navbar {
+  background-color: var(--dbz-blue) !important;
+  border-bottom: 4px solid var(--dbz-yellow);
+}
+
+.navbar-brand {
+  font-family: 'Bangers', cursive;
+  font-size: 2rem;
+  color: var(--dbz-yellow) !important;
+  text-shadow: 2px 2px var(--dbz-black);
+}
+
+.navbar-nav .nav-link {
+  font-family: 'Bangers', cursive;
+  color: var(--dbz-yellow) !important;
+  font-size: 1.2rem;
+  text-shadow: 1px 1px var(--dbz-black);
+  transition: color 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--dbz-white) !important;
+}
+
+/* Estilo para el enlace de cerrar sesión */
+.navbar-nav .nav-link a {
+  font-family: 'Bangers', cursive;
+  text-shadow: 1px 1px var(--dbz-black);
+}

@@ -1,0 +1,102 @@
+version: "3.9"
+
+services:
+  # ************************* DESARROLLO ANGULAR *************************
+  angular16:
+    image: node:18
+    container_name: angular16
+    working_dir: /usr/src/app
+    volumes:
+      - ./angular16:/usr/src/app
+    ports:
+      - "4216:4200"
+    tty: true
+    stdin_open: true
+    entrypoint: >
+      sh -c "npm install -g @angular/cli@16 &&
+      git config --global user.name 'Jota' &&
+      git config --global user.email 'jgarmay674@g.educaand.es' &&
+      exec sh"
+
+  angularM:
+    image: node:lts
+    container_name: angularM
+    working_dir: /usr/src/app
+    volumes:
+      - ./angularM:/usr/src/app
+    ports:
+      - "4219:4200" # PUERTO QUE HABRÁ QUE ACTUALIZAR, SI QUIERES
+    tty: true
+    stdin_open: true
+    entrypoint: >
+      sh -c "npm install -g @angular/cli@latest &&
+      git config --global user.name 'Jota' &&
+      git config --global user.email 'jgarmay674@g.educaand.es' &&
+      exec sh"
+
+  # ***************************** SERVICIOS *****************************
+  # Producción Angular
+  angular-app:
+    image: nginx:alpine
+    volumes:
+      - ./angular-app/dist:/usr/share/nginx/html
+    ports:
+      - "4200:80"
+
+  # API PHP
+  php-api:
+    build:
+      context: ./php-app
+      dockerfile: Dockerfile
+    volumes:
+      - ./php-app:/var/www/html
+    ports:
+      - "8080:80"
+
+  # API Flask
+  flask-api:
+    image: python:3.8-slim
+    volumes:
+      - ./python-app:/app
+    working_dir: /app
+    command: >
+      sh -c "pip install -r requirements.txt && flask run --host=0.0.0.0"
+    ports:
+      - "5001:5000"
+    environment:
+      FLASK_APP: app.py
+      FLASK_ENV: development
+
+  # API Node.js
+  nodejs-api:
+    image: node:14-alpine
+    volumes:
+      - ./nodejs-app:/app
+    working_dir: /app
+    command: sh -c "npm install && npm start"
+    ports:
+      - "3000:3000"
+
+  # Base de datos MySQL
+  mysql-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: dejame
+    volumes:
+      - ./db/dbzDB.sql:/docker-entrypoint-initdb.d/dbzDB.sql
+    ports:
+      - "3306:3306"
+
+  # phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql-db
+      PMA_USER: root
+      PMA_PASSWORD: dejame
+    ports:
+      - "8081:80"
+
+networks:
+  default:
+    name: shared_network

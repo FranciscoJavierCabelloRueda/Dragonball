@@ -1,0 +1,54 @@
+<div class="container-fluid py-3 px-4">
+    <h5>Listar Personajes</h5>
+    <table class="table table-borderd table-hover">
+        <!-- Cabecera de la tabla -->
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>IDB</th>
+                <th>Nombre</th>
+                <th>Fuerza</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <ng-container *ngIf="personajes.length > 0; else noPersonajes">
+            <!-- Cuerpo de la tabla -->
+            <tbody> <!-- Creamos cada línea de la tabla -->
+                <tr *ngFor="let personaje of personajes; let indice = index; let par = even; let impar = odd;"
+                    [ngClass]="{'table-primary': par, 'table-secondary': impar}">
+                    <!-- Usamos los indices para alternar el diseño -->
+                    <td>{{ indice + 1 }}</td>
+                    <td>{{ personaje.id }}</td>
+                    <td>
+                        <ng-container *ngIf="authService.isAuthenticated(); else noLink">
+                            <a [routerLink]="['/personaje', personaje.id]" class="text-decoration-none">
+                                {{ personaje.name }}
+                            </a>
+                        </ng-container>
+                        <ng-template #noLink>
+                            {{ personaje.name }}
+                        </ng-template>
+                    </td>
+                    <td>{{ personaje.ki }}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" (click)="eliminarPersonaje(personaje.id!)">Borrar</button>
+                        <button class="btn btn-warning btn-sm"
+                            (click)="modificarPersonaje(personaje, personaje.id!)">Actualizar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </ng-container>
+        <!-- Bloque de mensaje cuando no hay personajes -->
+        <ng-template #noPersonajes>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-center ">
+                        <div class="alert alert-warning m-0" role="alert">
+                            No hay personajes almacenados.
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </ng-template>
+    </table>
+</div>

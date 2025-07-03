@@ -1,0 +1,21 @@
+<div class="container mt-4">
+    <h3 class="text-center">Transformaciones de {{ nombrePersonaje }}</h3>
+    <div *ngIf="transformaciones.length > 0; else noTransformaciones">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let transformacion of transformaciones">
+                <div class="card mb-4">
+                    <img [src]="transformacion.image" [alt]="transformacion.name" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ transformacion.name }}</h5>
+                        <p class="card-text"><strong>KI:</strong> {{ transformacion.ki }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #noTransformaciones>
+        <p class="text-center">No se encontraron transformaciones para {{ nombrePersonaje }}.</p>
+    </ng-template>
+    <!-- Botón para volver a la página de detalle del personaje -->
+    <button class="btn btn-primary w-100 mt-3" (click)="volverAlListado()">Volver al listado</button>
+</div>

@@ -1,0 +1,19 @@
+<div class="container mt-4">
+    <div class="card mx-auto" style="max-width: 500px;">
+        <ng-container *ngIf="planeta.image; else noImage">
+            <img [src]="planeta.image" [alt]="planeta.name" class="card-img-top img-fluid" />
+        </ng-container>
+        <ng-template #noImage>
+            <div class="hidden-image">Imagen no disponible</div>
+        </ng-template>
+        <div class="card-body">
+            <h2 class="card-title">{{ planeta.name }}</h2>
+            <p><strong>Destruido:</strong> {{ planeta.isDestroyed }}</p>
+            <p><strong>Descripción:</strong></p>
+            <p>{{ planeta.description }}</p>
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary w-100 mt-3" (click)="volverAPrincipal()">Volver a la Página Principal</button>
+            </div>
+        </div>
+    </div>
+</div>

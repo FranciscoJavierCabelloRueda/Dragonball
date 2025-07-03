@@ -1,0 +1,52 @@
+<div class="container-fluid py-3 px-4">
+    <h5>Listar Transformaciones</h5>
+    <table class="table table-borderd table-hover">
+        <!-- Cabecera de la tabla -->
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>IDB</th>
+                <th>Nombre</th>
+                <th>Fuerza</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <ng-container *ngIf="transformaciones.length > 0; else noPlanetas">
+            <!-- Cuerpo de la tabla -->
+            <tbody> <!-- Creamos cada línea de la tabla -->
+                <tr *ngFor="let transformacion of transformaciones; let indice = index; let par = even; let impar = odd;"
+                    [ngClass]="{'table-primary': par, 'table-secondary': impar}">
+                    <!-- Usamos los indices para alternar el diseño -->
+                    <td>{{ indice + 1 }}</td>
+                    <td>{{ transformacion.id }}</td>
+                    <td>
+                        <ng-container *ngIf="authService.isAuthenticated(); else noLink">
+                            <a [routerLink]="['/transformacion', transformacion.id]" class="text-decoration-none">
+                                {{ transformacion.name }}
+                            </a>
+                        </ng-container>
+                        <ng-template #noLink>
+                            {{ transformacion.name }}
+                        </ng-template>
+                    </td>
+                    <td>{{ transformacion.ki }}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" (click)="eliminarTransformacion(transformacion.id!)">Borrar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </ng-container>
+        <!-- Bloque de mensaje cuando no hay personajes -->
+        <ng-template #noPlanetas>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-center ">
+                        <div class="alert alert-warning m-0" role="alert">
+                            No hay transformaciones almacenadas.
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </ng-template>
+    </table>
+</div>

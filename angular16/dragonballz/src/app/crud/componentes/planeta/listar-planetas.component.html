@@ -1,0 +1,52 @@
+<div class="container-fluid py-3 px-4">
+    <h5>Listar Planetas</h5>
+    <table class="table table-borderd table-hover">
+        <!-- Cabecera de la tabla -->
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>IDB</th>
+                <th>Nombre</th>
+                <th>Destruido</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <ng-container *ngIf="planetas.length > 0; else noPlanetas">
+            <!-- Cuerpo de la tabla -->
+            <tbody> <!-- Creamos cada línea de la tabla -->
+                <tr *ngFor="let planeta of planetas; let indice = index; let par = even; let impar = odd;"
+                    [ngClass]="{'table-primary': par, 'table-secondary': impar}">
+                    <!-- Usamos los indices para alternar el diseño -->
+                    <td>{{ indice + 1 }}</td>
+                    <td>{{ planeta.id }}</td>
+                    <td>
+                        <ng-container *ngIf="authService.isAuthenticated(); else noLink">
+                            <a [routerLink]="['/planeta', planeta.id]" class="text-decoration-none">
+                                {{ planeta.name }}
+                            </a>
+                        </ng-container>
+                        <ng-template #noLink>
+                            {{ planeta.name }}
+                        </ng-template>
+                    </td>
+                    <td>{{ planeta.isDestroyed }}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" (click)="eliminarPlaneta(planeta.id!)">Borrar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </ng-container>
+        <!-- Bloque de mensaje cuando no hay personajes -->
+        <ng-template #noPlanetas>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-center ">
+                        <div class="alert alert-warning m-0" role="alert">
+                            No hay planetas almacenados.
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </ng-template>
+    </table>
+</div>

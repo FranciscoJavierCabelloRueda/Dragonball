@@ -1,0 +1,12 @@
+<div class="container-fluid py-3 px-4">
+    <h5>Filtrar Transformaciones desde la API</h5>
+    <form class="row">
+        <div class="col-md-4">
+            <label for="personaje" class="form-label">Personaje</label>
+            <select id="personaje" [(ngModel)]="personaje" class="form-select" name="personaje" (change)="filtrarTransformacionesIDB()">
+                <option value="">Todos</option>
+                <option *ngFor="let personaje of personajes" [value]="personaje">{{ personaje }}</option>
+            </select>
+        </div>
+    </form>
+</div>
